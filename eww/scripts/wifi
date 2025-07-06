@@ -1,0 +1,5 @@
+#!/bin/sh
+
+name() {
+nmcli | grep "^wlp" | sed 's/\ connected\ to\ /Connected to /g' | cut -d ':' -f2
+}

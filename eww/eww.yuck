@@ -1,0 +1,56 @@
+(defpoll TIME :interval "5s" `date +\"%H:%M %p\"`)
+(defpoll DATE :interval "5s" `date +\"%A, %B, %d\"`)
+(defpoll BATTERY :interval "1s" "source scripts/battery; percent")
+(defpoll WIFI :interval "1s" "source scripts/wifi; name")
+
+(defwidget wifi_display []
+	(box :orientation "horizontal"
+	WIFI
+))
+
+(defwidget date_display []
+	(box :orientation "horizontal"
+	DATE
+))
+
+(defwidget hour_display []
+	(box :orientation "horizontal"
+	TIME
+))
+
+(defwidget battery_stand []
+	(box :orientation "horizontal"
+	"BAT:"
+	BATTERY
+))
+
+
+(defwidget bar_stuff []
+	(box :orientation "horizontal"
+	     :halign "end"
+	(wifi_display)
+	(date_display)
+	(hour_display)
+	(battery_stand)
+))
+
+(defwindow notifications
+	   :monitor 0
+	   :geometry (geometry :x "20px"
+			       :y "20px"
+			       :anchor "top right")
+	   :stacking "overlay"
+	   (label :text "EL QUE LEA ESTO ES GAY"))
+
+(defwindow bar
+	:monitor 0
+	:geometry (geometry :x "0%"
+			    :y "0%"
+			    :width "100%"
+			    :height "20px" 
+			    :anchor "top center")
+	:stacking "fg"
+	:reserve (struts :side "top" :distance "4%")
+	:windowtype "dock"
+	:wm-ignore false
+(bar_stuff))
